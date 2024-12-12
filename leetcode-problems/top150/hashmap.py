@@ -1,4 +1,4 @@
-# (number) Ransom Note [383]
+# (number) [383] Ransom Note
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
         if len(magazine) < len(ransomNote):
