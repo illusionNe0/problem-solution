@@ -87,7 +87,26 @@ class Solution:
 # (14) [134] gas station
 # (15) [135] candy
 # (16) [42] trapping rain water
+
 # (17) [13] roman to integer
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        d = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+
+        res = 0
+        # IV, IX, XL, XC, CD, CM
+        for i in range(len(s)):
+            # checking special cases like 4, 9, ...
+            # the logic is that, for example IV it is simply just -1 + 5, here I before V is -1 and V is just V which is 5
+            if s[i] == "I" and i < len(s) - 1 and (s[i + 1] == "V" or s[i + 1] == "X"):
+                res += -1
+            elif s[i] == "X" and i < len(s) - 1 and (s[i + 1] == "L" or s[i + 1] == "C"):
+                res += -10
+            elif s[i] == "C" and i < len(s) - 1 and (s[i + 1] == "D" or s[i + 1] == "M"):
+                res += -100
+            else:
+                res += d[s[i]]
+        return res
 
 
 # (18) [12] integer to roman
