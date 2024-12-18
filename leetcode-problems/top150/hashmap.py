@@ -76,6 +76,25 @@ class Solution:
 
         return d1 == d2
 
+# () [49] Group Anagrams
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = []
+        d = {}
+
+        # anagrams are equal strings if sorted, then the sorted one can be considered as key
+        # and values are uncahnged strings
+        for i in strs:
+            d.setdefault(''.join(sorted(i)), []).append(i)
+
+        # adding anagrams list in list
+        for i in d:
+            buffer = []
+            for j in d[i]:
+                buffer += [j]
+            anagrams.append(buffer)
+        return anagrams
+
 # () [1] Two Sum
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -86,4 +105,19 @@ class Solution:
                 return [was[delta], i]
             was[num] = i
         
+# () [202] Happy Number
 
+# () [219] Contains Duplicates II
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        dick = {}
+        # dick will contain value - index
+        # we will iterate in value calculating indexes difference
+        for index, value in enumerate(nums):
+            dick.setdefault(value, []).append(index)
+            for i in dick[value]:
+                if abs(i - index) <= k and i != index:
+                    return True
+        return False
+
+# () [128] Longest Consecutive Sequence
