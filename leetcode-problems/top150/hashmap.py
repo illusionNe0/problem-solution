@@ -1,4 +1,6 @@
-# (number) [383] Ransom Note
+"""
+[383] Ransom Note
+"""
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
         if len(magazine) < len(ransomNote):
@@ -19,7 +21,9 @@ class Solution:
                 return False
         return True
 
-# () [205] Isomorphic String
+"""
+[205] Isomorphic String
+"""
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
         # guard condition
@@ -39,7 +43,9 @@ class Solution:
                 return False
         return True
 
-# () [290] Word Pattern
+"""
+[290] Word Pattern
+"""
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         d = {}
@@ -59,7 +65,9 @@ class Solution:
 
         return ns == nns
 
-# () [242] Valid Anagram
+"""
+[242] Valid Anagram
+"""
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         # guard
@@ -76,7 +84,9 @@ class Solution:
 
         return d1 == d2
 
-# () [49] Group Anagrams
+"""
+[49] Group Anagrams
+"""
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         anagrams = []
@@ -95,7 +105,9 @@ class Solution:
             anagrams.append(buffer)
         return anagrams
 
-# () [1] Two Sum
+"""
+ [1] Two Sum
+"""
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         was = {}
@@ -105,9 +117,29 @@ class Solution:
                 return [was[delta], i]
             was[num] = i
         
-# () [202] Happy Number
+"""
+[202] Happy Number
+"""
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        d = {}
+        while True:
+            res = 0
+            # sum of square of digits
+            for i in str(n):
+                res += int(i)**2
+            
+            if res == 1:
+                return True
+            elif res in d.keys() or res in d.values():
+                return False
+            else:
+                d[n] = res
+                n = res
 
-# () [219] Contains Duplicates II
+"""
+[219] Contains Duplicates II
+"""
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
         dick = {}
@@ -120,4 +152,7 @@ class Solution:
                     return True
         return False
 
-# () [128] Longest Consecutive Sequence
+"""
+[128] Longest Consecutive Sequence in O(n)
+"""
+
