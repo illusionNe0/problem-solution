@@ -9,7 +9,10 @@ here will be my notes or news idk
 4.12.2024 - i will use python3, because it is new and new things are cool, right? (sosal?)
 """
 
-# (1) [88] merge sorted arrays
+
+"""
+[88] Merge Sorted Arrays
+"""
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         """
@@ -21,7 +24,10 @@ class Solution:
             j += 1
         nums1.sort() # sort final array
 
-# (2) [27] remove elemente
+
+"""
+[27] Remove Elemente
+"""
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
         i = 0 # fixing a starter pointer
@@ -32,7 +38,10 @@ class Solution:
                 i += 1
         return i
 
-# (3) [26] remove duplicates from sorted array
+
+"""
+[26] Remove Duplicates from Sorted Array
+"""
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         if not nums: # if array is empty bam return 0 immediatetly
@@ -46,7 +55,9 @@ class Solution:
 
 # (4) [80] remove duplicates from sorted array
 
-# (5) [169] majority element
+"""
+[169] Majority Element
+"""
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         was = [] # this is like a dictionary
@@ -59,17 +70,24 @@ class Solution:
 
 # (6) [189] rotate array
 
-# (7) [121] best time to buy and sell stock
-min_price = 100000000000 # set min price
-        max_profit = 0 # set max profit 
-        for i in range(len(prices)): # we will find min price every time and at the same time potential max profit
+"""
+[121] Best Time to Buy and Sell Stock
+"""
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_price = 100000000000
+        max_profit = 0
+        for i in range(len(prices)):
             if prices[i] < min_price:
                 min_price = prices[i]
             elif prices[i] - min_price > max_profit:
                 max_profit = prices[i] - min_price
         return max_profit
 
-# (8) [122] best time to buy and sell stock II
+
+"""
+[122] Best Time to Buy and Sell Stock II
+"""
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         sum: int = 0 # init sum
@@ -84,7 +102,9 @@ class Solution:
 # (11) [274] h index
 # (12) [380] insert, delete, get random O(1)
 
-# (13) [238] product of array except self
+"""
+[238] Product of Array Except Self
+"""
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         n = len(nums)
@@ -108,7 +128,9 @@ class Solution:
 # (15) [135] candy
 # (16) [42] trapping rain water
 
-# (17) [13] roman to integer
+"""
+[13] Roman to Integer
+"""
 class Solution:
     def romanToInt(self, s: str) -> int:
         d = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
@@ -128,8 +150,9 @@ class Solution:
                 res += d[s[i]]
         return res
 
-
-# (18) [12] integer to roman
+"""
+[12] Integer to Roman
+"""
 class Solution:
     def intToRoman(self, num: int) -> str:
         values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1] # nums list
@@ -144,7 +167,9 @@ class Solution:
         
         return s
 
-# (19) [58] length of last word
+"""
+[58] Length of Last Word
+"""
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
         # easy ahhaha
@@ -154,7 +179,9 @@ class Solution:
 # (20) [14] longest common prefix
 
 
-# (21) [151] reverse words in strings
+"""
+[151] Reverse Words in Strings
+"""
 class Solution:
     def reverseWords(self, s: str) -> str:
         # using python magic! just use methods
@@ -164,7 +191,10 @@ class Solution:
         # ezzz 0ms runtime
 
 # (22) [6] zigzag conversion
-# (23) [28] find the index of first occurence in a string
+
+"""
+[28] find the index of first occurence in a string
+"""
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
         # again, not even a problem
