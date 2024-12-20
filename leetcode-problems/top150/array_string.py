@@ -125,7 +125,26 @@ class Solution:
         return answer
 
 # (14) [134] gas station
-# (15) [135] candy
+"""
+[135] Candy
+"""
+class Solution:
+    def candy(self, ratings: List[int]) -> int:
+        l = len(ratings)
+        candies = [1] * l  # giving candies for all children
+
+        # using greedy with two passes, from left and from right
+        for i in range(1, l):
+            if ratings[i] > ratings[i - 1]:
+                candies[i] = candies[i - 1] + 1
+        
+        for i in range(l - 2, -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                candies[i] = max(candies[i], candies[i + 1] + 1)
+
+
+        return sum(candies)
+
 # (16) [42] trapping rain water
 
 """
