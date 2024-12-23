@@ -1,82 +1,211 @@
 """
-Knight Moves 🐎
-On an 8×8 chessboard, a knight is positioned at a given location. Write a program that marks the knight's position and all the squares it can attack. Mark the knight's position with the letter N and the squares it can attack with the symbol *. Fill all other squares with dots ..
+Chess Moves ♟♛♚♝♜♞
+On an 8×8 chessboard, a chess piece is positioned at a given location. Write a program that marks the piece's position and all the squares it can move to, based on its type and the rules of chess. Mark the piece's position with its symbol (P for pawn, R for rook, B for bishop, Q for queen, K for king, and N for knight), and the squares it can move to with the symbol *. Fill all other squares with dots ..
 
 Input Format:
 
-The program receives the knight's position in chess notation (e.g., e4), where the first character represents the column (a-h, from left to right), and the second character represents the row (1-8, from bottom to top).
+The program receives two inputs:
+1. The type of the chess piece: P, R, B, Q, K, or N.
+2. The position of the piece in chess notation (e.g., e4), where the first character represents the column (a-h, from left to right), and the second character represents the row (1-8, from bottom to top).
 
 Output Format:
 
 The program should print the chessboard, separating each element with spaces.
 
-Sample Input 1:
-b6
-Sample Output 1:
-* . * . . . . .
-. . . * . . . .
-. N . . . . . .
-. . . * . . . .
-* . * . . . . .
-. . . . . . . .
-. . . . . . . .
-. . . . . . . .
+Piece-Specific Rules:
+1. Pawn (P): Can move one square forward (or two squares forward if on its starting rank) and attacks diagonally forward. Ignore capturing rules for simplicity.
+2. Rook (R): Can move horizontally or vertically any number of squares.
+3. Bishop (B): Can move diagonally any number of squares.
+4. Queen (Q): Combines the movements of the rook and bishop.
+5. King (K): Can move one square in any direction.
+6. Knight (N): Moves in an L-shape: two squares in one direction and one square perpendicular to that.
+
+Sample input and output:
+
+choose chess piece: queen
+initial position: c3
+. . * . . . . *
+. . * . . . * .
+. . * . . * . .
+* . * . * . . .
+. * * * . . . .
+* * Q * * * * *
+. * * * . . . .
+* . * . * . . .
 """
 
-hor = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-ver = [1, 2, 3, 4, 5, 6, 7, 8]
-n = 8
+from typing import List, Tuple
 
-initial = input()
+hor: List[str] = ["a", "b", "c", "d", "e", "f", "g", "h"]
+ver: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+n: int = 8
 
-x = hor.index(initial[0])
-y = 7 - ver.index(int(initial[1]))
-# print(x, y) - for checking
+def init(initial_position: str) -> Tuple[List[List[str]], int, int]:
+    """
+    Initialize the chess board and return the board and coordinates of the initial position.
+    """
+    board: List[List[str]] = [["." for _ in range(n)] for _ in range(n)]
 
-# so we got coordinates of matrix
-# now, as i understand we have to create a matrix of 8x8 imitating a chess board
-# and fill it with points
+    x: int = hor.index(initial_position[0])
+    y: int = 7 - ver.index(int(initial_position[1]))
 
-board = [['.' for _ in range(8)] for _ in range(8)]
-board[y][x] = 'N'
+    return board, x, y
 
-# yes we have board, now we need to calculate all possible knight's final coordinates
-# and replace with *
-# don't forget about N on the knight coords
-"""
-if initial coords are (x, y), then final coords are:
-x+1, y+2
-x+2, y+1
-x+2, y-1
-x+1, y-2
-x-1, y-2
-x-2, y-1
-x-2, y+1
-x-1, y+2
-"""
+def print_board(board: List[List[str]]) -> None:
+    """
+    Print the chess board.
+    """
+    for row in board:
+        print(*row, end="\n")
 
-# after finding final coords we will store them in list
-res = []
+def pawn() -> None:
+    """
+    Display the possible moves of a pawn from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position")
+        return
 
-combinations = ((1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2))
+    board, x, y = init(initial_position)
 
-for i in combinations:
-    tx = x + i[0]
-    ty = y + i[1]
-    # checking if such cells exist in board
-    if 0 <= tx < 8 and 0 <= ty < 8:
-        res += [(tx, ty)]
+    if y > 0:
+        tx, ty = x, y - 1
+        board[ty][tx] = "*"
+        board[y][x] = "P"
+        print_board(board)
+    else:
+        board[y][x] = "P"
+        print_board(board)
 
-# print(res) - for checking list content
+def rook() -> None:
+    """
+    Display the possible moves of a rook from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position, try again")
+        return
 
-k = 0 # counter of the res
-while k < len(res):
-    # replace the correct cells with '*'
-    i = res[k][1]
-    j = res[k][0]
-    board[i][j] = '*'
-    k += 1
+    board, x, y = init(initial_position)
 
-for i in board:
-    print(*i, end='\n')
+    for i in range(n):
+        for j in range(n):
+            if j == x or i == y:
+                board[i][j] = "*"
+    board[y][x] = "R"
 
+    print_board(board)
+
+def bishop() -> None:
+    """
+    Display the possible moves of a bishop from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position, try again")
+        return
+
+    board, x, y = init(initial_position)
+
+    for i in range(n):
+        for j in range(n):
+            if abs(x - j) == abs(y - i):
+                board[i][j] = "*"
+    board[y][x] = "B"
+
+    print_board(board)
+
+def queen() -> None:
+    """
+    Display the possible moves of a queen from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position, try again")
+        return
+
+    board, x, y = init(initial_position)
+
+    for i in range(n):
+        for j in range(n):
+            if j == x or i == y or abs(x - j) == abs(y - i):
+                board[i][j] = "*"
+    board[y][x] = "Q"
+
+    print_board(board)
+
+def knight() -> None:
+    """
+    Display the possible moves of a knight from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position")
+        return
+
+    board, x, y = init(initial_position)
+    res: List[Tuple[int, int]] = []
+
+    combinations: Tuple[Tuple[int, int], ...] = (
+        (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, -1), (-2, 1), (-1, 2)
+    )
+
+    for dx, dy in combinations:
+        tx, ty = x + dx, y + dy
+        if 0 <= tx < n and 0 <= ty < n:
+            res.append((tx, ty))
+
+    for tx, ty in res:
+        board[ty][tx] = "*"
+
+    board[y][x] = "N"
+
+    print_board(board)
+
+def king() -> None:
+    """
+    Display the possible moves of a king from the given initial position.
+    """
+    initial_position: str = input("initial position: ").lower().strip().replace(" ", "")
+    if initial_position[0] not in hor or int(initial_position[1]) not in ver:
+        print("no such position")
+        return
+
+    board, x, y = init(initial_position)
+
+    for i in range(n):
+        for j in range(n):
+            if (abs(x - j) <= 1) and (abs(y - i) <= 1):
+                board[i][j] = "*"
+    board[y][x] = "K"
+
+    print_board(board)
+
+def main() -> None:
+    """
+    Main function to handle user input and execute the corresponding piece logic.
+    """
+    figures: List[str] = ["rook", "bishop", "queen", "knight", "king", "pawn"]
+
+    piece: str = input("choose chess piece: ").lower().strip().replace(" ", "")
+    if piece not in figures:
+        print("no such chess piece")
+    else:
+        if piece == "pawn":
+            pawn()
+        elif piece == "rook":
+            rook()
+        elif piece == "bishop":
+            bishop()
+        elif piece == "queen":
+            queen()
+        elif piece == "knight":
+            knight()
+        elif piece == "king":
+            king()
+        else:
+            print("error")
+
+if __name__ == "__main__":
+    main()
