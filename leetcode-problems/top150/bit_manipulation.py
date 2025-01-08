@@ -25,3 +25,24 @@ class Solution:
             res = (res << 1) | bit  # add bit, and move bit in n
             n >>= 1               
         return res
+        
+"""
+[191] Number of 1 Bits
+"""
+# so i came wth two different solutions
+# the first one is bit manipulation, we use bitwise operator to count the number of ones
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        while n:
+            count += n & 1
+            n >>= 1
+        return count
+        
+# second solution is to convert number to it's binary representation and count the number of ones
+"""
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        return bin(n)[2:].count('1')
+"""
+
